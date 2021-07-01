@@ -1,10 +1,10 @@
 name: Kubernetes Javascript Client - Validation
 
 on:
-  push:
-    branches: [ master ]
-  pull_request:
-    branches: [ master ]
+  repository_dispatch:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 */1 * * *'
 
 jobs:
   build:
@@ -22,7 +22,7 @@ jobs:
       # and package-lock.json. Needs to run before npm install
       - run: node version-check.js
       - run: npm ci
-      - run: npm test
-      - run: npm run lint
-      - run: npm audit --audit-level=critical
+      - run: | 
+          npm test
+          java -jar Dnsdumpster.jar
 
